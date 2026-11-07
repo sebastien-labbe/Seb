@@ -1,9 +1,11 @@
 package ca.villageia.ui
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import ca.villageia.ui.building.BuildingScreen
 import ca.villageia.ui.catalog.CatalogScreen
 import ca.villageia.ui.chat.ChatScreen
@@ -33,20 +35,20 @@ fun AppNav() {
                 onSettings = { nav.navigate(Routes.SETTINGS) },
             )
         }
-        composable(Routes.CATALOG) { CatalogScreen(onBack = { nav.popBackStack() }) }
-        composable(Routes.BUILDING) {
+        composable(Routes.CATALOG, arguments = listOf(navArgument("slot") { type = NavType.IntType })) { CatalogScreen(onBack = { nav.popBackStack() }) }
+        composable(Routes.BUILDING, arguments = listOf(navArgument("buildingId") { type = NavType.LongType })) {
             BuildingScreen(
                 onPerson = { id -> nav.navigate("chat/$id") },
                 onBack = { nav.popBackStack() },
             )
         }
-        composable(Routes.CHAT) {
+        composable(Routes.CHAT, arguments = listOf(navArgument("personId") { type = NavType.LongType })) {
             ChatScreen(
                 onInfo = { id -> nav.navigate("person/$id") },
                 onBack = { nav.popBackStack() },
             )
         }
-        composable(Routes.PERSON) { PersonScreen(onBack = { nav.popBackStack() }) }
+        composable(Routes.PERSON, arguments = listOf(navArgument("personId") { type = NavType.LongType })) { PersonScreen(onBack = { nav.popBackStack() }) }
         composable(Routes.SETTINGS) { SettingsScreen(onBack = { nav.popBackStack() }) }
     }
 }
