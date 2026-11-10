@@ -3,6 +3,7 @@ package ca.villageia.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -28,6 +29,15 @@ interface PersonDao {
     @Query("SELECT * FROM person WHERE buildingId = :buildingId ORDER BY id")
     fun observeByBuilding(buildingId: Long): Flow<List<Person>>
 
+    @Query("SELECT * FROM person WHERE id = :id")
+    fun observe(id: Long): Flow<Person?>
+
     @Insert
     suspend fun insert(person: Person): Long
+
+    @Update
+    suspend fun update(person: Person)
+
+    @Query("DELETE FROM person WHERE id = :id")
+    suspend fun delete(id: Long)
 }

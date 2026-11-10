@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.villageia.catalog.BuildingCatalog
 import ca.villageia.catalog.BuildingType
 import ca.villageia.repository
+import ca.villageia.ui.BuildingIcon
 import kotlinx.coroutines.launch
 
 class CatalogViewModel(app: Application, handle: SavedStateHandle) : AndroidViewModel(app) {
@@ -64,7 +65,7 @@ fun CatalogScreen(onBack: () -> Unit, vm: CatalogViewModel = viewModel()) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
-                        Text(t.emoji, fontSize = 28.sp)
+                        BuildingIcon(t, 36.dp)
                         Text(t.defaultName)
                     }
                 }

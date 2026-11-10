@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,7 +12,7 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatScreen(onInfo: (Long) -> Unit, onBack: () -> Unit) {
+fun ChatScreen(onInfo: () -> Unit, onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -21,12 +22,15 @@ fun ChatScreen(onInfo: (Long) -> Unit, onBack: () -> Unit) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Retour")
                     }
                 },
+                actions = {
+                    IconButton(onClick = onInfo) { Icon(Icons.Default.Info, contentDescription = "Fiche") }
+                },
             )
         },
     ) { padding ->
         androidx.compose.foundation.layout.Box(
             Modifier.padding(padding).fillMaxSize(),
             contentAlignment = Alignment.Center,
-        ) { Text("À venir") }
+        ) { Text("Le clavardage arrive bientôt") }
     }
 }

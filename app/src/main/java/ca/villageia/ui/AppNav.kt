@@ -39,12 +39,13 @@ fun AppNav() {
         composable(Routes.BUILDING, arguments = listOf(navArgument("buildingId") { type = NavType.LongType })) {
             BuildingScreen(
                 onPerson = { id -> nav.navigate("chat/$id") },
+                onEditPerson = { id -> nav.navigate("person/$id") },
                 onBack = { nav.popBackStack() },
             )
         }
-        composable(Routes.CHAT, arguments = listOf(navArgument("personId") { type = NavType.LongType })) {
+        composable(Routes.CHAT, arguments = listOf(navArgument("personId") { type = NavType.LongType })) { entry ->
             ChatScreen(
-                onInfo = { id -> nav.navigate("person/$id") },
+                onInfo = { nav.navigate("person/${entry.arguments?.getLong("personId") ?: 0L}") },
                 onBack = { nav.popBackStack() },
             )
         }

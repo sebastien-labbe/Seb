@@ -14,7 +14,11 @@ data class BuildingType(
     val defaultName: String,
     val defaultInstructions: String,
     val defaultExpertiseId: String,
+    val art: GarageArt? = null,
 )
+
+/** Garage dessiné (murs, toit, porte), au lieu d'un emoji. */
+data class GarageArt(val wall: Long, val roof: Long, val pitched: Boolean)
 
 object BuildingCatalog {
     private fun variants(
@@ -27,6 +31,19 @@ object BuildingCatalog {
         name: String, instr: String, expertise: String,
     ) = listOf(BuildingType(id, cat, emoji, name, instr, expertise))
 
+    private val garagesDrawn = listOf(
+        GarageArt(0xFFFFF3E0, 0xFFC62828, true),
+        GarageArt(0xFFE3F2FD, 0xFF1565C0, true),
+        GarageArt(0xFFECEFF1, 0xFF546E7A, false),
+        GarageArt(0xFFE8F5E9, 0xFF2E7D32, false),
+    ).mapIndexed { i, art ->
+        BuildingType(
+            "garage_${'e' + i}", Category.GARAGES, "🏠", "Mon garage",
+            "Dans ce projet, je veux de l'aide pour mes véhicules, mes outils, le bricolage et mes projets d'atelier.",
+            "mecanicien_auto", art,
+        )
+    }
+
     val all: List<BuildingType> = listOf(
         variants("maison", Category.HABITATIONS, listOf("🏠", "🏡", "🏘️", "🛖"), "Notre domicile",
             "Dans ce projet, je veux parler à des spécialistes qui connaîtront ma vie et m'aideront dans les projets à la maison : aider avec les devoirs des enfants, cuisiner, faire mes impôts, mes réclamations d'assurance, gérer mes factures, entretenir la maison et la piscine.",
@@ -37,6 +54,7 @@ object BuildingCatalog {
         variants("garage", Category.GARAGES, listOf("🔧", "🚘", "🛠️", "🅿️"), "Mon garage",
             "Dans ce projet, je veux de l'aide pour mes véhicules, mes outils, le bricolage et mes projets d'atelier.",
             "mecanicien_auto"),
+        garagesDrawn,
         variants("commerce", Category.COMMERCES, listOf("🏪", "🏦", "🏭", "🏗️"), "Mon entreprise",
             "Dans ce projet, je veux de l'aide pour mon entreprise : stratégie, marketing, ventes et gestion.",
             "gestionnaire_projet"),
